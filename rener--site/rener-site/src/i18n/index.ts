@@ -14,13 +14,13 @@ const resources = {
       },
       hero: {
         title: "RENER ENERGY",
-        subtitle: "Energy Management System Services",
+        subtitle: "SCADA and Energy Management System Services",
         cta: "Learn More"
       },
       about: {
         title: "ABOUT US",
         subtitle: "Leading the way in renewable energy solutions",
-        description: "RENER ENERGY SA, a subsidiary of the KTISTOR Group, specializes in providing comprehensive energy management software systems solutions.\n\nOur goal is to offer excellence in the energy management sector, providing innovative solutions that meet the modern challenges of the energy market.\n\nRENER ENERGY SA aims to create long-term trust relationships with its partners and clients, providing reliable solutions supported by a team of specialized professionals, dedicated to the continuous provision of innovation and quality.",
+        description: "RENER ENERGY SA specializes in providing comprehensive energy management software systems solutions.\n\nOur goal is to offer excellence in the energy management sector, providing innovative solutions that meet the modern challenges of the energy market.\n\nRENER ENERGY SA aims to create long-term trust relationships with its partners and clients, providing reliable solutions supported by a team of specialized professionals, dedicated to the continuous provision of innovation and quality.",
         team: "Specialized Team",
         certified: "Certified Solutions", 
         innovation: "Innovative Technology",
@@ -140,7 +140,7 @@ const resources = {
           contact: "Contact"
         },
         footer: {
-          copyright: "© 2024 RENER ENERGY SA. All rights reserved. | Member of KTISTOR Group",
+          copyright: "© 2024 RENER ENERGY SA. All rights reserved.",
           backToHome: "← Back to Home"
         },
         jobDetail: {
@@ -224,13 +224,13 @@ const resources = {
       },
       hero: {
         title: "RENER ENERGY",
-        subtitle: "Energy Management System Services",
+        subtitle: "SCADA and Energy Management System Services",
         cta: "Μάθετε Περισσότερα"
       },
       about: {
         title: "ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ",
         subtitle: "Πρωτοπορούμε στις λύσεις ανανεώσιμης ενέργειας",
-        description: "Η RENER ENERGY SA, μέλος του Ομίλου ΚΤΙΣΤΩΡ, εξειδικεύεται στην παροχή ολοκληρωμένων λύσεων energy management software systems.\n\nΣτόχος μας είναι να προσφέρουμε στον τομέα της διαχείρισης ενέργειας, παρέχοντας καινοτόμες λύσεις που ανταποκρίνονται στις σύγχρονες προκλήσεις της αγοράς ενέργειας.\n\nΗ RENER ENERGY SA στοχεύει στη δημιουργία μακροχρόνιων σχέσεων εμπιστοσύνης με τους συνεργάτες και τους πελάτες της, παρέχοντας αξιόπιστες λύσεις που υποστηρίζονται από μια ομάδα εξειδικευμένων επαγγελματιών, αφοσιωμένων στη συνεχή παροχή καινοτομίας και ποιότητας.",
+        description: "Η RENER ENERGY SA εξειδικεύεται στην παροχή ολοκληρωμένων λύσεων energy management software systems.\n\nΣτόχος μας είναι να προσφέρουμε στον τομέα της διαχείρισης ενέργειας, παρέχοντας καινοτόμες λύσεις που ανταποκρίνονται στις σύγχρονες προκλήσεις της αγοράς ενέργειας.\n\nΗ RENER ENERGY SA στοχεύει στη δημιουργία μακροχρόνιων σχέσεων εμπιστοσύνης με τους συνεργάτες και τους πελάτες της, παρέχοντας αξιόπιστες λύσεις που υποστηρίζονται από μια ομάδα εξειδικευμένων επαγγελματιών, αφοσιωμένων στη συνεχή παροχή καινοτομίας και ποιότητας.",
         team: "Εξειδικευμένη Ομάδα",
         certified: "Πιστοποιημένες Λύσεις",
         innovation: "Καινοτόμα Τεχνολογία", 
@@ -350,7 +350,7 @@ const resources = {
           contact: "Επικοινωνία"
         },
         footer: {
-          copyright: "© 2024 RENER ENERGY SA. Όλα τα δικαιώματα διατηρούνται. | Μέλος του Ομίλου ΚΤΙΣΤΩΡ",
+          copyright: "© 2024 RENER ENERGY SA. Όλα τα δικαιώματα διατηρούνται.",
           backToHome: "← Επιστροφή στην Αρχική"
         },
         jobDetail: {
