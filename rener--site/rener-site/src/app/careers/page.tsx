@@ -54,27 +54,15 @@ export default function Careers() {
     },
     {
       id: 2,
-      title: t('careers.jobs.seniorSoftwareEngineer.title'),
+      title: t('careers.jobs.softwareEngineer.title'),
       tags: [
         { text: t('careers.tags.fullTime'), color: "blue" },
         { text: t('careers.tags.remote'), color: "green" },
-        { text: t('careers.tags.senior'), color: "purple" }
+        { text: t('careers.tags.midLevel'), color: "purple" }
       ],
-      shortDescription: t('careers.jobs.seniorSoftwareEngineer.shortDescription'),
-      fullDescription: t('careers.jobs.seniorSoftwareEngineer.fullDescription'),
-      skills: t('careers.jobs.seniorSoftwareEngineer.skills', { returnObjects: true }) as string[]
-    },
-    {
-      id: 3,
-      title: t('careers.jobs.juniorDeveloper.title'),
-      tags: [
-        { text: t('careers.tags.fullTime'), color: "blue" },
-        { text: t('careers.tags.remote'), color: "green" },
-        { text: t('careers.tags.entryLevel'), color: "orange" }
-      ],
-      shortDescription: t('careers.jobs.juniorDeveloper.shortDescription'),
-      fullDescription: t('careers.jobs.juniorDeveloper.fullDescription'),
-      skills: t('careers.jobs.juniorDeveloper.skills', { returnObjects: true }) as string[]
+      shortDescription: t('careers.jobs.softwareEngineer.shortDescription'),
+      fullDescription: t('careers.jobs.softwareEngineer.fullDescription'),
+      skills: t('careers.jobs.softwareEngineer.skills', { returnObjects: true }) as string[]
     }
   ];
 
@@ -209,7 +197,7 @@ export default function Careers() {
             <h2 className="section-heading">{t('careers.whyWorkWithUs.title')}</h2>
           </div>
           
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
             <div className="text-center p-4 sm:p-6">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
@@ -219,18 +207,6 @@ export default function Careers() {
               <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">{t('careers.whyWorkWithUs.continuousTraining.title')}</h3>
               <p className="text-sm sm:text-base text-gray-600">
                 {t('careers.whyWorkWithUs.continuousTraining.description')}
-              </p>
-            </div>
-
-            <div className="text-center p-4 sm:p-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
-                </svg>
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">{t('careers.whyWorkWithUs.flexibleSchedule.title')}</h3>
-              <p className="text-sm sm:text-base text-gray-600">
-                {t('careers.whyWorkWithUs.flexibleSchedule.description')}
               </p>
             </div>
 
@@ -301,54 +277,11 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* Application Process */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="section-heading">{t('careers.applicationProcess.title')}</h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
-                1
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">{t('careers.applicationProcess.step1.title')}</h3>
-              <p className="text-gray-600">{t('careers.applicationProcess.step1.description')}</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
-                2
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">{t('careers.applicationProcess.step2.title')}</h3>
-              <p className="text-gray-600">{t('careers.applicationProcess.step2.description')}</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
-                3
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">{t('careers.applicationProcess.step3.title')}</h3>
-              <p className="text-gray-600">{t('careers.applicationProcess.step3.description')}</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
-                4
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">{t('careers.applicationProcess.step4.title')}</h3>
-              <p className="text-gray-600">{t('careers.applicationProcess.step4.description')}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact for Careers */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="section-heading">{t('careers.questions.title')}</h2>
-          <p className="text-lg text-gray-600 mb-8">
+      {/* Questions Section */}
+      <section className="py-16 bg-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="section-heading mb-6">{t('careers.questions.title')}</h2>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             {t('careers.questions.description')}
           </p>
           <div style={{
@@ -358,9 +291,8 @@ export default function Careers() {
             justifyContent: 'center',
             alignItems: 'center'
           }}>
-           
-            <Link 
-              href="/#contact" 
+            <Link
+              href="/#contact"
               className="btn-outline"
               style={{
                 textAlign: 'center',
@@ -379,9 +311,9 @@ export default function Careers() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <Image 
-                src="/Rener_Icon_Green.png" 
-                alt="Rener Energy Logo" 
+              <Image
+                src="/Rener_Icon_Green.png"
+                alt="Rener Energy Logo"
                 width={32}
                 height={32}
                 style={{

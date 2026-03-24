@@ -8,8 +8,24 @@ import LanguageSwitcher from '../components/LanguageSwitcher';
 import ContactForm from '../components/ContactForm';
 
 export default function Home() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [interestFormOpen, setInterestFormOpen] = useState(false);
+  const [interestSubmitted, setInterestSubmitted] = useState(false);
+  const [interestSubmitting, setInterestSubmitting] = useState(false);
+  const [interestError, setInterestError] = useState('');
+  const [interestFormData, setInterestFormData] = useState({
+    companyName: '',
+    contactPerson: '',
+    email: '',
+    phone: '',
+    parkType: '',
+    location: '',
+    powerMw: '',
+    capacityMwh: '',
+    connectionTerms: '',
+    comments: ''
+  });
 
   const buttonStyle = {
     backgroundColor: '#2563eb',
@@ -21,6 +37,102 @@ export default function Home() {
     cursor: 'pointer',
     fontSize: '1rem',
     transition: 'all 0.2s ease'
+  };
+
+  const interestInputStyle = {
+    width: '100%',
+    padding: '0.75rem',
+    borderRadius: '0.5rem',
+    border: '1px solid #d1d5db',
+    fontSize: '0.95rem',
+    color: '#111827',
+    backgroundColor: '#ffffff'
+  };
+
+  const handleInterestChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setInterestFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleInterestSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setInterestSubmitting(true);
+    setInterestSubmitted(false);
+    setInterestError('');
+
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
+    try {
+      let response = await fetch(`${apiBaseUrl}/api/solutions-interest`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...interestFormData,
+          language: i18n.language
+        })
+      });
+
+      // Backward-compatible fallback: use existing contact endpoint if backend wasn't restarted yet.
+      if (response.status === 404) {
+        const contactMessage = [
+          `Interest Form: EMS / SCADA CHPS`,
+          '',
+          `A. Company Information`,
+          `Company name: ${interestFormData.companyName}`,
+          `Contact person: ${interestFormData.contactPerson}`,
+          `Email: ${interestFormData.email}`,
+          `Phone: ${interestFormData.phone}`,
+          '',
+          `B. Park Information`,
+          `Type: ${interestFormData.parkType}`,
+          `Location: ${interestFormData.location}`,
+          `Power (MW): ${interestFormData.powerMw}`,
+          `Capacity (MWh): ${interestFormData.capacityMwh}`,
+          `Connection Terms: ${interestFormData.connectionTerms}`,
+          '',
+          `Additional Information / Comments:`,
+          interestFormData.comments || '-'
+        ].join('\n');
+
+        response = await fetch(`${apiBaseUrl}/api/contact`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from_name: interestFormData.contactPerson,
+            from_email: interestFormData.email,
+            subject: `EMS/SCADA Interest - ${interestFormData.companyName}`,
+            message: contactMessage
+          })
+        });
+      }
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Interest form submission failed');
+      }
+
+      setInterestSubmitted(true);
+      setInterestFormData({
+        companyName: '',
+        contactPerson: '',
+        email: '',
+        phone: '',
+        parkType: '',
+        location: '',
+        powerMw: '',
+        capacityMwh: '',
+        connectionTerms: '',
+        comments: ''
+      });
+    } catch (error) {
+      console.error('Interest form submission error:', error);
+      setInterestError(t('solutions.interestForm.errorMessage'));
+    } finally {
+      setInterestSubmitting(false);
+    }
   };
 
   return (
@@ -285,7 +397,13 @@ export default function Home() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 220px))',
+            justifyContent: 'center',
+            gap: '1.5rem',
+            marginBottom: '4rem'
+          }}>
             <div style={{ textAlign: 'center' }}>
               <div style={{
                 width: '4rem',
@@ -324,23 +442,6 @@ export default function Home() {
               <div style={{
                 width: '4rem',
                 height: '4rem',
-                backgroundColor: '#dbeafe',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 1rem auto'
-              }}>
-                <svg style={{ width: '1.5rem', height: '1.5rem', fill: '#2563eb' }} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H15a1 1 0 001-1V6a1 1 0 00-1-1H5a1 1 0 00-1 1v5a1 1 0 001 1h3.771z" clipRule="evenodd"></path>
-                </svg>
-              </div>
-              <h3 style={{ fontWeight: '600', color: '#111827', fontSize: '0.9rem' }}>{t('about.innovation')}</h3>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{
-                width: '4rem',
-                height: '4rem',
                 backgroundColor: '#dcfce7',
                 borderRadius: '50%',
                 display: 'flex',
@@ -372,7 +473,7 @@ export default function Home() {
           </div>
 
           <div className="solutions-grid">
-            {/* SCADA & EMS */}
+            {/* SCADA for PV */}
             <div style={{ backgroundColor: '#f9fafb', borderRadius: '1rem', padding: '2rem', border: '1px solid #e5e7eb' }}>
               <div style={{
                 width: '4rem',
@@ -389,58 +490,58 @@ export default function Home() {
                 </svg>
               </div>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
-                {t('solutions.scada.title')}
+                {t('solutions.scadaPv.title')}
               </h3>
               <p style={{ color: '#374151', lineHeight: '1.6' }}>
-                {t('solutions.scada.description')}
+                {t('solutions.scadaPv.description')}
               </p>
             </div>
 
-            {/* Prediction & Optimization */}
+            {/* SCADA and EMS for BESS */}
             <div style={{ backgroundColor: '#f9fafb', borderRadius: '1rem', padding: '2rem', border: '1px solid #e5e7eb' }}>
               <div style={{
                 width: '4rem',
                 height: '4rem',
-                backgroundColor: '#faf5ff',
+                backgroundColor: '#dbeafe',
                 borderRadius: '0.75rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: '1.5rem'
               }}>
-                <svg style={{ width: '1.5rem', height: '1.5rem', fill: '#7c3aed' }} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
+                <svg style={{ width: '1.5rem', height: '1.5rem', fill: '#2563eb' }} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 4a1 1 0 011 1v1h4V5a1 1 0 112 0v1h1a2 2 0 012 2v1h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v1a2 2 0 01-2 2h-1v1a1 1 0 11-2 0v-1h-4v1a1 1 0 11-2 0v-1H8a2 2 0 01-2-2v-1H5a1 1 0 110-2h1v-2H5a1 1 0 110-2h1V8a2 2 0 012-2h1V5a1 1 0 011-1zm-1 4v8h8V8H8zm2 2h4v4h-4v-4z"></path>
                 </svg>
               </div>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
-                {t('solutions.prediction.title')}
+                {t('solutions.scadaEmsBess.title')}
               </h3>
               <p style={{ color: '#374151', lineHeight: '1.6' }}>
-                {t('solutions.prediction.description')}
+                {t('solutions.scadaEmsBess.description')}
               </p>
             </div>
 
-            {/* Consulting Services */}
+            {/* NEXUS Platform */}
             <div style={{ backgroundColor: '#f9fafb', borderRadius: '1rem', padding: '2rem', border: '1px solid #e5e7eb' }}>
               <div style={{
                 width: '4rem',
                 height: '4rem',
-                backgroundColor: '#fed7d7',
+                backgroundColor: '#dcfce7',
                 borderRadius: '0.75rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: '1.5rem'
               }}>
-                <svg style={{ width: '1.5rem', height: '1.5rem', fill: '#dc2626' }} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h2zm4-3a1 1 0 00-1 1v1h2V4a1 1 0 00-1-1zM4 9a1 1 0 000 2v2a1 1 0 001 1h10a1 1 0 001-1v-2a1 1 0 100-2H4z" clipRule="evenodd"></path>
+                <svg style={{ width: '1.5rem', height: '1.5rem', fill: '#059669' }} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19.94 5.06c-3.27 0-5.6 1.18-7.05 2.92C11.44 6.24 9.11 5.06 5.84 5.06c0 4.96 2.62 8.28 7.05 9.26V19a1 1 0 102 0v-4.68c4.43-.98 7.05-4.3 7.05-9.26z"></path>
                 </svg>
               </div>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
-                {t('solutions.consulting.title')}
+                {t('solutions.nexus.title')}
               </h3>
               <p style={{ color: '#374151', lineHeight: '1.6' }}>
-                {t('solutions.consulting.description')}
+                {t('solutions.nexus.description')}
               </p>
             </div>
 
@@ -468,32 +569,200 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Forecasting & Optimization */}
-            <div style={{ backgroundColor: '#f9fafb', borderRadius: '1rem', padding: '2rem', border: '1px solid #e5e7eb' }}>
-              <div style={{
-                width: '4rem',
-                height: '4rem',
-                backgroundColor: '#dcfce7',
-                borderRadius: '0.75rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: '1.5rem'
-              }}>
-                <svg style={{ width: '1.5rem', height: '1.5rem', fill: '#059669' }} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path>
+            {/* Interest Button Card */}
+            <div style={{
+              backgroundColor: 'transparent',
+              borderRadius: 0,
+              padding: '2rem 0',
+              border: 'none',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+              minHeight: 'unset'
+            }}>
+              <button
+                type="button"
+                onClick={() => {
+                  setInterestSubmitted(false);
+                  setInterestError('');
+                  setInterestFormOpen(true);
+                }}
+                style={{
+                  ...buttonStyle,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                {t('solutions.interestForm.button')}
+                <svg style={{ width: '1rem', height: '1rem', fill: 'white' }} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L12.586 12H4a1 1 0 110-2h8.586l-2.293-2.293a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
                 </svg>
-              </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
-                {t('solutions.forecasting.title')}
-              </h3>
-              <p style={{ color: '#374151', lineHeight: '1.6' }}>
-                {t('solutions.forecasting.description')}
-              </p>
+              </button>
             </div>
+
           </div>
         </div>
       </section>
+
+      {interestFormOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(17, 24, 39, 0.6)',
+            zIndex: 60,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem'
+          }}
+          onClick={() => setInterestFormOpen(false)}
+        >
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '980px',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              backgroundColor: 'white',
+              borderRadius: '1rem',
+              padding: '1.5rem',
+              border: '1px solid #e5e7eb'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', gap: '1rem' }}>
+              <h3 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#1e3a8a', margin: 0 }}>
+                {t('solutions.interestForm.title')}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setInterestFormOpen(false)}
+                style={{
+                  border: '1px solid #d1d5db',
+                  backgroundColor: 'white',
+                  borderRadius: '0.5rem',
+                  padding: '0.5rem 0.75rem',
+                  cursor: 'pointer',
+                  color: '#374151'
+                }}
+              >
+                {t('solutions.interestForm.close')}
+              </button>
+            </div>
+
+            <form onSubmit={handleInterestSubmit} style={{ display: 'grid', gap: '1rem' }}>
+              <h4 style={{ fontSize: '1.25rem', color: '#1e3a8a', margin: '0.5rem 0' }}>
+                {t('solutions.interestForm.sectionCompany')}
+              </h4>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                    {t('solutions.interestForm.companyName')}
+                  </label>
+                  <input name="companyName" value={interestFormData.companyName} onChange={handleInterestChange} required style={interestInputStyle} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                    {t('solutions.interestForm.contactPerson')}
+                  </label>
+                  <input name="contactPerson" value={interestFormData.contactPerson} onChange={handleInterestChange} required style={interestInputStyle} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                    {t('solutions.interestForm.email')}
+                  </label>
+                  <input type="email" name="email" value={interestFormData.email} onChange={handleInterestChange} required style={interestInputStyle} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                    {t('solutions.interestForm.phone')}
+                  </label>
+                  <input name="phone" value={interestFormData.phone} onChange={handleInterestChange} required style={interestInputStyle} />
+                </div>
+              </div>
+
+              <h4 style={{ fontSize: '1.25rem', color: '#1e3a8a', margin: '0.5rem 0' }}>
+                {t('solutions.interestForm.sectionPark')}
+              </h4>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                    {t('solutions.interestForm.parkType')}
+                  </label>
+                  <select name="parkType" value={interestFormData.parkType} onChange={handleInterestChange} required style={interestInputStyle}>
+                    <option value="" style={{ color: '#111827', backgroundColor: '#ffffff' }}>-</option>
+                    <option value="standalone" style={{ color: '#111827', backgroundColor: '#ffffff' }}>{t('solutions.interestForm.typeOptions.standalone')}</option>
+                    <option value="hybrid" style={{ color: '#111827', backgroundColor: '#ffffff' }}>{t('solutions.interestForm.typeOptions.hybrid')}</option>
+                  </select>
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                    {t('solutions.interestForm.location')}
+                  </label>
+                  <input name="location" value={interestFormData.location} onChange={handleInterestChange} required style={interestInputStyle} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                    {t('solutions.interestForm.powerMw')}
+                  </label>
+                  <input type="number" step="0.01" min="0" name="powerMw" value={interestFormData.powerMw} onChange={handleInterestChange} required style={interestInputStyle} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                    {t('solutions.interestForm.capacityMwh')}
+                  </label>
+                  <input type="number" step="0.01" min="0" name="capacityMwh" value={interestFormData.capacityMwh} onChange={handleInterestChange} required style={interestInputStyle} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                    {t('solutions.interestForm.connectionTerms')}
+                  </label>
+                  <select name="connectionTerms" value={interestFormData.connectionTerms} onChange={handleInterestChange} required style={interestInputStyle}>
+                    <option value="" style={{ color: '#111827', backgroundColor: '#ffffff' }}>-</option>
+                    <option value="yes" style={{ color: '#111827', backgroundColor: '#ffffff' }}>{t('solutions.interestForm.connectionOptions.yes')}</option>
+                    <option value="no" style={{ color: '#111827', backgroundColor: '#ffffff' }}>{t('solutions.interestForm.connectionOptions.no')}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#1f2937' }}>
+                  {t('solutions.interestForm.comments')}
+                </label>
+                <textarea
+                  name="comments"
+                  value={interestFormData.comments}
+                  onChange={handleInterestChange}
+                  rows={4}
+                  style={{ ...interestInputStyle, resize: 'vertical' }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', alignItems: 'center', marginTop: '0.5rem' }}>
+                <button type="submit" style={buttonStyle} disabled={interestSubmitting}>
+                  {interestSubmitting ? t('solutions.interestForm.sending') : t('solutions.interestForm.submit')}
+                </button>
+                {interestSubmitted && (
+                  <span style={{ color: '#065f46', fontWeight: '500' }}>
+                    {t('solutions.interestForm.successMessage')}
+                  </span>
+                )}
+                {interestError && (
+                  <span style={{ color: '#b91c1c', fontWeight: '500' }}>
+                    {interestError}
+                  </span>
+                )}
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Contact Section */}
       <section id="contact" style={{ padding: '5rem 1rem', backgroundColor: '#f9fafb' }}>

@@ -29,25 +29,50 @@ const resources = {
       solutions: {
         title: "ACTIVITIES",
         subtitle: "RENER ENERGY SA is an innovative technology company in the energy sector, specializing in software solutions and consulting services for Renewable Energy Sources and CHPS.",
-        scada: {
-          title: "SCADA and EMS software development",
-          description: "Creating advanced Supervisory Control and Data Acquisition (SCADA) and Energy Management Systems (EMS) for Photovoltaic Stations and CHPS."
+        scadaPv: {
+          title: "SCADA Software for PV",
+          description: "Advanced Supervisory Control and Data Acquisition system for PV stations."
         },
-        prediction: {
-          title: "Forecasting and studies provision",
-          description: "Forecasting services, analysis and feasibility studies for investments in the energy sector."
+        scadaEmsBess: {
+          title: "SCADA and EMS Software for BESS",
+          description: "Advanced Supervisory Control and Data Acquisition and Energy Management Systems for storage stations."
         },
-        consulting: {
-          title: "Consulting services",
-          description: "Full support for development and operation of RES and CHPS projects, from design to operation."
+        nexus: {
+          title: "NEXUS Platform",
+          description: "Unified platform for monitoring and control of PV stations and CHPS."
         },
         monitoring: {
           title: "Remote monitoring and control of RES Stations by DEDDIE",
           description: "Comprehensive solution covering the requirements for remote control of Photovoltaic Stations according to DEDDIE specifications."
         },
-        forecasting: {
-          title: "Forecasting & Optimization Software",
-          description: "Design and development of tools for production forecasting and optimization of participation in the Energy Stock Market."
+        interestForm: {
+          button: "Express Interest",
+          title: "INTEREST FORM FOR EMS / SCADA CHPS",
+          sectionCompany: "A. Company Information",
+          sectionPark: "B. Park Information",
+          companyName: "Company name",
+          contactPerson: "Contact person",
+          email: "Email",
+          phone: "Phone",
+          parkType: "Type (Standalone/Hybrid)",
+          location: "Location",
+          powerMw: "Power (MW)",
+          capacityMwh: "Capacity (MWh)",
+          connectionTerms: "Connection Terms (YES/NO)",
+          comments: "Additional Information/Comments",
+          submit: "Submit Interest Form",
+          close: "Close",
+          typeOptions: {
+            standalone: "Standalone",
+            hybrid: "Hybrid"
+          },
+          connectionOptions: {
+            yes: "YES",
+            no: "NO"
+          },
+          successMessage: "Your interest form has been submitted successfully.",
+          sending: "Sending...",
+          errorMessage: "An error occurred while sending the form. Please try again."
         }
       },
       contact: {
@@ -129,17 +154,11 @@ const resources = {
             fullDescription: "RENER ENERGY is looking for an Electrical Engineer to strengthen our technical team.\n\nMain Responsibilities:\n• Study and design of Photovoltaic Stations\n• Analysis and optimization of power systems\n• Support of CHPS technical specifications\n• Cooperation with DEDDIE for interconnection requirements\n• Technical support for existing projects\n\nRequired Qualifications:\n• Degree in Electrical Engineering or Computer Engineering\n• 3-5 years of experience in power systems\n• Knowledge of AutoCAD and design software\n• Experience with PV design software\n• Knowledge of Grid Code and interconnection regulations\n\nBenefits:\n• Competitive salary according to experience\n• Hybrid work (3 days office, 2 remote)\n• Professional development opportunities\n• Participation in innovative RES projects",
             skills: ["Power Systems", "AutoCAD", "PV Design", "Grid Code"]
           },
-          seniorSoftwareEngineer: {
-            title: "Senior Software Engineer", 
+          softwareEngineer: {
+            title: "Software Engineer", 
             shortDescription: "Experienced Software Engineer wanted for SCADA systems development and energy management platforms. Experience in C#, .NET, and databases required.",
-            fullDescription: "RENER ENERGY is looking for an experienced Senior Software Engineer to join our software development team.\n\nMain Responsibilities:\n• Development and maintenance of SCADA systems for Photovoltaic Stations\n• Design and implementation of Energy Management Systems (EMS)\n• Collaboration with the team for developing advanced prediction algorithms\n• Code review and mentoring of junior team members\n• Participation in architectural design of new projects\n\nRequired Qualifications:\n• Degree in Computer Science or related field\n• 5+ years of experience in C# and .NET Framework/Core\n• Experience with SQL Server and databases\n• Knowledge of SCADA systems will be highly appreciated\n• English at communication level\n\nBenefits:\n• Competitive salary\n• Flexible working hours\n• Remote work opportunity\n• Private health insurance\n• Continuous training and development",
+            fullDescription: "RENER ENERGY is looking for an experienced Software Engineer to join our software development team.\n\nMain Responsibilities:\n• Development and maintenance of SCADA systems for Photovoltaic Stations\n• Design and implementation of Energy Management Systems (EMS)\n• Collaboration with the team for developing advanced prediction algorithms\n• Code review and mentoring of team members\n• Participation in architectural design of new projects\n\nRequired Qualifications:\n• Degree in Computer Science or related field\n• 5+ years of experience in C# and .NET Framework/Core\n• Experience with SQL Server and databases\n• Knowledge of SCADA systems will be highly appreciated\n• English at communication level\n\nBenefits:\n• Competitive salary\n• Flexible working hours\n• Remote work opportunity\n• Private health insurance\n• Continuous training and development",
             skills: ["C#", ".NET", "SQL Server", "SCADA"]
-          },
-          juniorDeveloper: {
-            title: "Junior Developer",
-            shortDescription: "Opportunity for a new programmer to start their career in the energy sector. Programming knowledge and enthusiasm for technology required.",
-            fullDescription: "RENER ENERGY offers an excellent opportunity for a new programmer to develop their skills.\n\nMain Responsibilities:\n• Development of web applications for energy management\n• Maintenance and improvement of existing code\n• Participation in code reviews and team meetings\n• Learning new technologies and frameworks\n• Supporting senior developers in projects\n\nRequired Qualifications:\n• Degree in Computer Science or related field\n• Basic programming knowledge (JavaScript, Python, or C#)\n• Familiarity with Git and version control\n• Enthusiasm for learning and development\n• Good knowledge of English\n\nBenefits:\n• Mentoring from experienced developers\n• Training in cutting-edge technologies\n• 100% remote work with flexible hours\n• Competitive salary for junior position\n• Rapid advancement based on performance",
-            skills: ["JavaScript", "Python", "Git", "Web Development"]
           }
         },
         tags: {
@@ -148,9 +167,7 @@ const resources = {
           remote: "Remote",
           hybrid: "Hybrid",
           onSite: "On-site",
-          senior: "Senior",
           midLevel: "Mid-level",
-          junior: "Junior",
           entryLevel: "Entry-level"
         },
         form: {
@@ -222,25 +239,50 @@ const resources = {
       solutions: {
         title: "ΔΡΑΣΤΗΡΙΟΠΟΙΗΣΗ",
         subtitle: "Η RENER ENERGY SA είναι μια καινοτόμος εταιρεία τεχνολογίας στον ενεργειακό τομέα, με εξειδίκευση στις λύσεις λογισμικού και τις συμβουλευτικές υπηρεσίες για Ανανεώσιμες Πηγές Ενέργειας και ΣΑΗΕ.",
-        scada: {
-          title: "Ανάπτυξη λογισμικού SCADA και EMS",
-          description: "Δημιουργία προηγμένων συστημάτων Supervisory Control and Data Acquisition (SCADA) και Energy Management Systems (EMS) για Φωτοβολταϊκούς Σταθμούς και ΣΑΗΕ."
+        scadaPv: {
+          title: "Λογισμικό SCADA για PV",
+          description: "Προηγμένο σύστημα Supervisory Control and Data Acquisition για ΦΒ σταθμούς."
         },
-        prediction: {
-          title: "Παροχή προβλέψεων και μελετών",
-          description: "Υπηρεσίες πρόγνωσης, ανάλυσης και μελετών βιωσιμότητας για επενδύσεις στον ενεργειακό τομέα."
+        scadaEmsBess: {
+          title: "Λογισμικό SCADA και EMS για BESS",
+          description: "Προηγμένα συστήματα Supervisory Control and Data Acquisition και Energy Management Systems για σταθμούς αποθήκευσης"
         },
-        consulting: {
-          title: "Συμβουλευτικές υπηρεσίες",
-          description: "Πλήρης υποστήριξη ανάπτυξης και λειτουργίας έργων ΑΠΕ και ΣΑΗΕ, από τον σχεδιασμό έως τη λειτουργία."
+        nexus: {
+          title: "Πλατφόρμα NEXUS",
+          description: "Ενοποιημένη πλατφόρμα για την παρακολούθηση και έλεγχο ΦΒ σταθμών και ΣΑΗΕ."
         },
         monitoring: {
           title: "Τηλεποπτεία και έλεγχος Σταθμών ΑΠΕ από τον ΔΕΔΔΗΕ",
           description: "Ολοκληρωμένη λύση που καλύπτει τις απαιτήσεις τηλεχειρισμού Φωτοβολταϊκών Σταθμών σύμφωνα με τις προδιαγραφές του ΔΕΔΔΗΕ."
         },
-        forecasting: {
-          title: "Λογισμικό πρόβλεψης & βελτιστοποίησης",
-          description: "Σχεδίαση και ανάπτυξη εργαλείων για προβλέψεις παραγωγής και βελτιστοποίηση συμμετοχής στη Χρηματιστηριακή Αγορά Ενέργειας."
+        interestForm: {
+          button: "Εκδήλωση Ενδιαφέροντος",
+          title: "ΦΟΡΜΑ ΕΝΔΙΑΦΕΡΟΝΤΟΣ ΓΙΑ EMS / SCADA ΣΑΗΕ",
+          sectionCompany: "Α. Στοιχεία Εταιρείας",
+          sectionPark: "Β. Στοιχεία Πάρκου",
+          companyName: "Επωνυμία εταιρείας",
+          contactPerson: "Υπεύθυνος Επικοινωνίας",
+          email: "Email",
+          phone: "Τηλέφωνο",
+          parkType: "Τύπος (Standalone/Hybrid)",
+          location: "Θέση",
+          powerMw: "Ισχύς (MW)",
+          capacityMwh: "Χωρητικότητα (MWh)",
+          connectionTerms: "Όροι Σύνδεσης (ΝΑΙ/ΟΧΙ)",
+          comments: "Πρόσθετες Πληροφορίας/Σχόλια",
+          submit: "Αποστολή Φόρμας Ενδιαφέροντος",
+          close: "Κλείσιμο",
+          typeOptions: {
+            standalone: "Standalone",
+            hybrid: "Hybrid"
+          },
+          connectionOptions: {
+            yes: "ΝΑΙ",
+            no: "ΟΧΙ"
+          },
+          successMessage: "Η φόρμα ενδιαφέροντος υποβλήθηκε επιτυχώς.",
+          sending: "Αποστολή...",
+          errorMessage: "Προέκυψε σφάλμα κατά την αποστολή της φόρμας. Παρακαλώ δοκιμάστε ξανά."
         }
       },
       contact: {
@@ -322,17 +364,11 @@ const resources = {
             fullDescription: "Η RENER ENERGY αναζητά έναν Ηλεκτρολόγο Μηχανικό για την ενίσχυση της τεχνικής μας ομάδας.\n\nΚύριες Αρμοδιότητες:\n• Μελέτη και σχεδιασμός Φωτοβολταϊκών Σταθμών\n• Ανάλυση και βελτιστοποίηση power systems\n• Υποστήριξη τεχνικών προδιαγραφών ΣΑΗΕ\n• Συνεργασία με τον ΔΕΔΔΗΕ για απαιτήσεις διασύνδεσης\n• Τεχνική υποστήριξη σε υπάρχοντα έργα\n\nΑπαιτούμενα Προσόντα:\n• Πτυχίο Ηλεκτρολόγου Μηχανικού ή Μηχανικού Η/Υ και Πληροφορικής\n• 3-5 χρόνια εμπειρίας σε power systems\n• Γνώση AutoCAD και σχεδιαστικών προγραμμάτων\n• Εμπειρία με PV design software\n• Γνώση Grid Code και κανονισμών διασύνδεσης\n\nΠαροχές:\n• Ανταγωνιστικός μισθός ανάλογα με την εμπειρία\n• Hybrid εργασία (3 ημέρες γραφείο, 2 remote)\n• Δυνατότητες επαγγελματικής εξέλιξης\n• Συμμετοχή σε καινοτόμα έργα ΑΠΕ",
             skills: ["Power Systems", "AutoCAD", "PV Design", "Grid Code"]
           },
-          seniorSoftwareEngineer: {
-            title: "Senior Software Engineer",
+          softwareEngineer: {
+            title: "Software Engineer",
             shortDescription: "Ζητείται έμπειρος Software Engineer για ανάπτυξη SCADA συστημάτων και energy management platforms. Απαιτείται εμπειρία σε C#, .NET, και βάσεις δεδομένων.",
-            fullDescription: "Η RENER ENERGY αναζητά έναν έμπειρο Senior Software Engineer για να ενταχθεί στην ομάδα ανάπτυξης λογισμικού μας.\n\nΚύριες Αρμοδιότητες:\n• Ανάπτυξη και συντήρηση SCADA συστημάτων για Φωτοβολταϊκούς Σταθμούς\n• Σχεδιασμός και υλοποίηση Energy Management Systems (EMS)\n• Συνεργασία με την ομάδα για την ανάπτυξη προηγμένων αλγορίθμων πρόβλεψης\n• Code review και mentoring νεότερων μελών της ομάδας\n• Συμμετοχή στον αρχιτεκτονικό σχεδιασμό νέων projects\n\nΑπαιτούμενα Προσόντα:\n• Πτυχίο στην Πληροφορική ή συναφές πεδίο\n• 5+ χρόνια εμπειρίας σε C# και .NET Framework/Core\n• Εμπειρία με SQL Server και βάσεις δεδομένων\n• Γνώση SCADA συστημάτων θα εκτιμηθεί ιδιαίτερα\n• Αγγλικά σε επίπεδο επικοινωνίας\n\nΠαροχές:\n• Ανταγωνιστικός μισθός\n• Ευέλικτο ωράριο εργασίας\n• Δυνατότητα remote εργασίας\n• Ιδιωτική ασφάλεια υγείας\n• Συνεχής εκπαίδευση και ανάπτυξη",
+            fullDescription: "Η RENER ENERGY αναζητά έναν έμπειρο Software Engineer για να ενταχθεί στην ομάδα ανάπτυξης λογισμικού μας.\n\nΚύριες Αρμοδιότητες:\n• Ανάπτυξη και συντήρηση SCADA συστημάτων για Φωτοβολταϊκούς Σταθμούς\n• Σχεδιασμός και υλοποίηση Energy Management Systems (EMS)\n• Συνεργασία με την ομάδα για την ανάπτυξη προηγμένων αλγορίθμων πρόβλεψης\n• Code review και mentoring μελών της ομάδας\n• Συμμετοχή στον αρχιτεκτονικό σχεδιασμό νέων projects\n\nΑπαιτούμενα Προσόντα:\n• Πτυχίο στην Πληροφορική ή συναφές πεδίο\n• 5+ χρόνια εμπειρίας σε C# και .NET Framework/Core\n• Εμπειρία με SQL Server και βάσεις δεδομένων\n• Γνώση SCADA συστημάτων θα εκτιμηθεί ιδιαίτερα\n• Αγγλικά σε επίπεδο επικοινωνίας\n\nΠαροχές:\n• Ανταγωνιστικός μισθός\n• Ευέλικτο ωράριο εργασίας\n• Δυνατότητα remote εργασίας\n• Ιδιωτική ασφάλεια υγείας\n• Συνεχής εκπαίδευση και ανάπτυξη",
             skills: ["C#", ".NET", "SQL Server", "SCADA"]
-          },
-          juniorDeveloper: {
-            title: "Junior Developer",
-            shortDescription: "Ευκαιρία για νέο προγραμματιστή να ξεκινήσει την καριέρα του στον ενεργειακό τομέα. Ζητείται γνώση προγραμματισμού και ενθουσιασμός για τεχνολογία.",
-            fullDescription: "Η RENER ENERGY προσφέρει μια εξαιρετική ευκαιρία σε νέο προγραμματιστή να αναπτύξει τις δεξιότητές του.\n\nΚύριες Αρμοδιότητες:\n• Ανάπτυξη web applications για energy management\n• Συντήρηση και βελτίωση υπάρχοντος κώδικα\n• Συμμετοχή σε code reviews και team meetings\n• Μάθηση νέων τεχνολογιών και frameworks\n• Υποστήριξη senior developers σε projects\n\nΑπαιτούμενα Προσόντα:\n• Πτυχίο σε Πληροφορική ή συναφές πεδίο\n• Βασική γνώση προγραμματισμού (JavaScript, Python, ή C#)\n• Εξοικείωση με Git και version control\n• Ενθουσιασμός για μάθηση και ανάπτυξη\n• Καλή γνώση Αγγλικών\n\nΠαροχές:\n• Mentoring από έμπειρους developers\n• Εκπαίδευση σε cutting-edge τεχνολογίες\n• 100% remote εργασία με ευέλικτο ωράριο\n• Ανταγωνιστικός μισθός για junior θέση\n• Ταχεία εξέλιξη βάσει απόδοσης",
-            skills: ["JavaScript", "Python", "Git", "Web Development"]
           }
         },
         tags: {
@@ -341,9 +377,7 @@ const resources = {
           remote: "Εξ' Αποστάσεως",
           hybrid: "Hybrid",
           onSite: "Στο Γραφείο",
-          senior: "Senior",
           midLevel: "Μεσαίο Επίπεδο",
-          junior: "Junior", 
           entryLevel: "Εισαγωγικό Επίπεδο"
         },
         form: {
